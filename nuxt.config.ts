@@ -28,5 +28,6 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxt/test-utils",
     "usebootstrap",
+    "@pinia/nuxt",
   ],
 });
