@@ -15,5 +15,10 @@ export default defineNuxtConfig({
     port: process.env.DEV_PORT ? parseInt(process.env.DEV_PORT) : 8081,
   },
 
+  sourcemap: {
+    server: true,
+    client: true,
+  },
+
   modules: ["@nuxt/eslint", "@nuxt/fonts", "@nuxt/icon", "@nuxt/test-utils"],
 });
