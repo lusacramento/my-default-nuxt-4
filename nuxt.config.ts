@@ -29,5 +29,15 @@ export default defineNuxtConfig({
     "@nuxt/test-utils",
     "usebootstrap",
     "@pinia/nuxt",
+    [
+      "nuxt-mongoose",
+      {
+        uri: process.env.MONGODB_URI, // Recommended: Use environment variables for sensitive data
+        options: {
+          // Mongoose connection options (e.g., useNewUrlParser, useUnifiedTopology)
+        },
+        modelsDir: "server/models", // Default directory for Mongoose schemas
+      },
+    ],
   ],
 });
