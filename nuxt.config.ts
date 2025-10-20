@@ -20,5 +20,11 @@ export default defineNuxtConfig({
     client: true,
   },
 
-  modules: ["@nuxt/eslint", "@nuxt/fonts", "@nuxt/icon", "@nuxt/test-utils"],
+  modules: [
+    "@nuxt/eslint",
+    "@nuxt/fonts",
+    "@nuxt/icon",
+    "@nuxt/test-utils",
+    "usebootstrap",
+  ],
 });
