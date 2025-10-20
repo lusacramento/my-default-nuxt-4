@@ -20,6 +20,8 @@ export default defineNuxtConfig({
     client: true,
   },
 
+  css: ["~/assets/styles/main.scss"],
+
   modules: [
     "@nuxt/eslint",
     "@nuxt/fonts",
