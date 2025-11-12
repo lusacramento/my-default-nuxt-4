@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     "@nuxt/test-utils",
     "usebootstrap",
     "@pinia/nuxt",
+    "nuxt-auth-utils",
     [
       "nuxt-mongoose",
       {
