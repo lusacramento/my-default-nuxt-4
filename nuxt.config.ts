@@ -5,9 +5,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   runtimeConfig: {
+    secret: process.env.SECRET,
     public: {
       devPort: process.env.DEV_PORT,
       host: process.env.HOST,
+      appName: process.env.APP_NAME
     },
   },
 
@@ -29,6 +31,7 @@ export default defineNuxtConfig({
     "@nuxt/test-utils",
     "usebootstrap",
     "@pinia/nuxt",
+    "nuxt-auth-utils",
     [
       "nuxt-mongoose",
       {
