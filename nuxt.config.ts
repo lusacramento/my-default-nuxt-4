@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   runtimeConfig: {
+    secret: process.env.SECRET,
     public: {
       devPort: process.env.DEV_PORT,
       host: process.env.HOST,
