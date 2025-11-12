@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     public: {
       devPort: process.env.DEV_PORT,
       host: process.env.HOST,
+      appName: process.env.APP_NAME
     },
   },
 

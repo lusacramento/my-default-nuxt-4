@@ -1,7 +1,7 @@
 <template>
   <Navbar expand="lg" background-color="body-tertiary" fixed="top">
     <Container type="fluid">
-      <NavbarBrand>Navbar</NavbarBrand>
+      <NavbarBrand>{{ useRuntimeConfig().public.appName }}</NavbarBrand>
       <NavbarToggler />
       <NavbarCollapse>
         <NavbarNavList margin="e-auto b-2 b-lg-0">
