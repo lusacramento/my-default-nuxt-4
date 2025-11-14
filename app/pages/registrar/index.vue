@@ -8,17 +8,11 @@
 
 <script lang="ts" setup>
 import { useIAuth } from "~/composables/interfaces/iAuth"
+import type { AuthResponse } from "~~/types/AuthResponse";
 import type { UserDTO } from "~~/types/UserDTO";
 
-interface Response {
-  message?: string,
-  error?: {
-    message: string
-  }
-}
-
 async function register(user: UserDTO) {
-  const { message, error } = await useIAuth().signUp(user) as Response
+  const { message, error } = await useIAuth().signUp(user) as AuthResponse
   if (message)
     useRouter().push('/')
   if (error)

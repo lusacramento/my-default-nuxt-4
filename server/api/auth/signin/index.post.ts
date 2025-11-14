@@ -103,6 +103,6 @@ export default defineEventHandler(async (event) => {
     };
     
   } catch (error) {
-    return error;
+    return { error };
   }
 });
