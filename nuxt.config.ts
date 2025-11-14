@@ -1,5 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
@@ -9,7 +8,8 @@ export default defineNuxtConfig({
     public: {
       devPort: process.env.DEV_PORT,
       host: process.env.HOST,
-      appName: process.env.APP_NAME
+      appName: process.env.APP_NAME,
+      baseURL: process.env.BASE_URL
     },
   },
 
