@@ -1,3 +1,4 @@
+import { useConfirmRegister } from "~/composables/mail/confirmRegister";
 import { useSecurity } from "~/composables/domain/security";
 import type { UserDTO } from "~~/types/UserDTO";
 import type { User } from "~~/types/User";
@@ -5,41 +6,42 @@ import { useValidations } from "~/composables/domain/validations";
 import { UserSchema } from "~~/server/models/user.schema";
 import { Messages } from "~~/types/enums/Messages";
 import mongoose from "mongoose";
+import {createTransport} from 'nodemailer'
 
 export default defineEventHandler(async (event) => {
-  const user = (await readBody(event)) as UserDTO;
+  const userDTO = (await readBody(event)) as UserDTO;
 
   try {
     // Payload verification
-    if (!user)
+    if (!userDTO)
       throw createError({
         statusCode: 400,
         statusMessage: "Bad Request",
         message: Messages.BLANK_FORM,
       });
 
-    if (!user.name)
+    if (!userDTO.name)
       throw createError({
         statusCode: 400,
         statusMessage: "Bad Request",
         message: Messages.NAME_NOT_PROVIDER,
       });
 
-    if (!user.email)
+    if (!userDTO.email)
       throw createError({
         statusCode: 400,
         statusMessage: "Bad Request",
         message: Messages.EMAIL_NOT_PROVIDER,
       });
 
-    if (!user.password)
+    if (!userDTO.password)
       throw createError({
         statusCode: 400,
         statusMessage: "Bad Request",
         message: Messages.PASSWORD_NOT_PROVIDER,
       });
 
-    if (!user.repeatPassword)
+    if (!userDTO.repeatPassword)
       throw createError({
         statusCode: 400,
         statusMessage: "Bad Request",
@@ -47,21 +49,21 @@ export default defineEventHandler(async (event) => {
       });
 
     // Fields verification
-    if (!useValidations().isMoreTwoCaracters(user.name))
+    if (!useValidations().isMoreTwoCaracters(userDTO.name))
       throw createError({
         statusCode: 400,
         statusMessage: "Bad Request",
         message: `O nome ${Messages.MORE_2_CHARS}`,
       });
 
-    if (!useValidations().email(user.email))
+    if (!useValidations().email(userDTO.email))
       throw createError({
         statusCode: 400,
         statusMessage: "Bad Request",
         message: Messages.INCOMPATIBLE_EMAIL_FORMAT,
       });
 
-    if (!useValidations().password(user.password))
+    if (!useValidations().password(userDTO.password))
       throw createError({
         statusCode: 400,
         statusMessage: "Bad Request",
@@ -69,7 +71,7 @@ export default defineEventHandler(async (event) => {
       });
 
     if (
-      !useValidations().areEqualsTwoStrings(user.password, user.repeatPassword)
+      !useValidations().areEqualsTwoStrings(userDTO.password, userDTO.repeatPassword)
     )
       throw createError({
         statusCode: 400,
@@ -78,7 +80,7 @@ export default defineEventHandler(async (event) => {
       });
 
     // user verification
-    const isAlreadyUser = await UserSchema.exists({ name: user.name });
+    const isAlreadyUser = await UserSchema.exists({ name: userDTO.name });
     if (isAlreadyUser)
       throw createError({
         statusCode: 400,
@@ -86,7 +88,7 @@ export default defineEventHandler(async (event) => {
         message: Messages.NAME_ALREADY_EXISTS,
       });
 
-    const isAlreadyEmail = await UserSchema.exists({ email: user.email });
+    const isAlreadyEmail = await UserSchema.exists({ email: userDTO.email });
     if (isAlreadyEmail)
       throw createError({
         statusCode: 400,
@@ -97,25 +99,63 @@ export default defineEventHandler(async (event) => {
     // Post user
     const ObjectId = mongoose.Types.ObjectId;
     const id = new ObjectId();
-    const newUser = {
+    const user = {
       _id: id,
-      name: user.name,
-      email: user.email,
+      name: userDTO.name,
+      email: userDTO.email,
       token: await useSecurity().createUserToken(
         {
           id: id as unknown as string,
-          email: user.email,
-          password: user.password,
+          email: userDTO.email,
+          password: userDTO.password,
         },
         useRuntimeConfig().secret
       ),
     } as User;
 
-    await UserSchema.create(newUser);
+    const newUser = await UserSchema.create(user);
+    if(!newUser)  throw createError({
+        statusCode: 500,
+        statusMessage: "Internal Server Error",
+        message: Messages.INSERT_DB_ERROR,
+      });
 
+    const url = `${useRuntimeConfig().public.baseURL}/confirmar-registro?token=${user.token}`;
+
+    const {html, text } = useConfirmRegister().generateEmailContent(
+      user.name,
+      url
+    );
+
+    const transporter = createTransport({
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT),
+      secure: true,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
+
+    const subject = `${useRuntimeConfig().public.appName} - Confirmação de Registro`;
+
+    const info = transporter.sendMail({
+        from: `"${process.env.APP_NAME}" <${process.env.SMTP_USER}>`,
+        to: user.email,
+        subject: subject,
+        text: text,
+        html: html,
+      })
+
+      if(!info)  throw createError({
+        statusCode: 500,
+        statusMessage: "Internal Server Error",
+        message: Messages.EMAIL_SERVER_ERROR,
+      });
+      
     return {
       message: Messages.SUCCESS_REGISTERED_USER,
-      token: newUser.token,
+      token: user.token,
     };
   } catch (error) {
     return error;
