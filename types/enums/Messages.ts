@@ -32,5 +32,6 @@ export enum Messages {
   EMAIL_SERVER_ERROR = "Houve um erro ao enviar o email. Contacte o suporte.",
   INSERT_DB_ERROR = "Houve um erro ao inserir no Banco de Dados. Contacte o suporte.",
   CONFIRM_REGISTER="Confirme seu registro através do link que enviamos para seu email.",
-  NOT_REGISTER_CONFIRM = "O usuário está registrado, mas não confirmado. Por favor, verifique seu email para confirmar o cadastro."
+  NOT_REGISTER_CONFIRM = "O usuário está registrado, mas não confirmado. Por favor, verifique seu email para confirmar o cadastro.",
+  RECOVERY_PASSWORD_EMAIL_SENT = "Verifique a caixa de entrada do seu email para recuperar sua senha. Esta solicitação expira em 10 minutos."
 }
