@@ -30,4 +30,6 @@ export enum Messages {
   CONFIRM_PUT_PASSWORD = "Para alterar sua senha, acesse o link enviado no email cadastrado.",
   ID_NOT_PROVIDER = "Id não informado.",
   UPDATED_PASSWORD = "Senha atualizada com sucesso! Faça o login novamente",
+  EMAIL_SERVER_ERROR = "Houve um erro ao enviar o email. Contacte o suporte.",
+  INSERT_DB_ERROR = "Houve um erro ao inserir no Banco de Dados. Contacte o suporte.",
 }
