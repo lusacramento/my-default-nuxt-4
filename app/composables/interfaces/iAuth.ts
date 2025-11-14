@@ -17,5 +17,11 @@ export const useIAuth = () => {
     })
   }
 
-  return { signUp, signIn }
+  async function rescueAccess(email: string){
+    return await $fetch(`${baseUrl}/recovery/${email}`, {
+      method: 'GET'
+    })
+  }
+
+  return { signUp, signIn, rescueAccess }
 }
