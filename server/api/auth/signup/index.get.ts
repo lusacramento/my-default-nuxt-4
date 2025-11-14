@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
         message: Messages.INVALID_CREDENTIALS,
       });
 
-    const payload = decoded as { id: string; email: string; password: string };
+    const payload = decoded as { id: string };
 
     const user = await UserSchema.findById(payload.id);
 
