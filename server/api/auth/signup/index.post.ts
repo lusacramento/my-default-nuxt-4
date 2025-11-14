@@ -148,11 +148,11 @@ export default defineEventHandler(async (event) => {
     } - Confirmação de Registro`;
 
     const info = transporter.sendMail({
-        from: `"${process.env.APP_NAME}" <${process.env.SMTP_USER}>`,
-        to: user.email,
-        subject: subject,
-        text: text,
-        html: html,
+      from: `"${process.env.APP_NAME}" <${process.env.SMTP_USER}>`,
+      to: user.email,
+      subject: subject,
+      text: text,
+      html: html,
     });
 
     if (!info)
@@ -161,9 +161,9 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Internal Server Error",
         message: Messages.EMAIL_SERVER_ERROR,
       });
-      
+
     return {
-      message: Messages.SUCCESS_REGISTERED_USER,
+      message: Messages.CONFIRM_REGISTER,
       token: user.token,
     };
   } catch (error) {
