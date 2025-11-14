@@ -124,6 +124,8 @@ export default defineEventHandler(async (event) => {
         message: Messages.INSERT_DB_ERROR,
       });
 
+      setResponseStatus(event, 201);
+
     const url = `${
       useRuntimeConfig().public.baseURL
     }/confirmar-registro?token=${user.token}`;
