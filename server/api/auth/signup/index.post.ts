@@ -149,7 +149,7 @@ export default defineEventHandler(async (event) => {
       useRuntimeConfig().public.appName
     } - Confirmação de Registro`;
 
-    const info = transporter.sendMail({
+    const info = await transporter.sendMail({
       from: `"${process.env.APP_NAME}" <${process.env.SMTP_USER}>`,
       to: user.email,
       subject: subject,
