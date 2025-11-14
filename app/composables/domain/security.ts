@@ -16,7 +16,7 @@ export const useSecurity = () => {
   }
 
   async function createRescuePasswordToken(payload: string, secret: string) {
-    return await jwt.sign({ payload: payload }, secret, { expiresIn: "10m" });
+    return await jwt.sign({ email: payload }, secret, { expiresIn: "10m" });
   }
 
   function decodeToken(token: string, secret: string) {
