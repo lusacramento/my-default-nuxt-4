@@ -10,5 +10,12 @@ export const useIAuth = () => {
     })
   }
 
-  return { signUp }
+  async function signIn(email: string, password: string){
+    return await $fetch(`${baseUrl}/signin`, {
+      method: 'POST',
+      body: { email, password }
+    })
+  }
+
+  return { signUp, signIn }
 }
