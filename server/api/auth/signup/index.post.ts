@@ -124,9 +124,11 @@ export default defineEventHandler(async (event) => {
         message: Messages.INSERT_DB_ERROR,
       });
 
+      setResponseStatus(event, 201);
+
     const url = `${
       useRuntimeConfig().public.baseURL
-    }/confirmar-registro?token=${user.token}`;
+    }/api/signup?token=${user.token}`;
 
     const { html, text } = useConfirmRegister().generateEmailContent(
       user.name,
@@ -164,7 +166,7 @@ export default defineEventHandler(async (event) => {
 
     return {
       message: Messages.CONFIRM_REGISTER,
-      token: user.token,
+      url: url,
     };
   } catch (error) {
     return { error };
