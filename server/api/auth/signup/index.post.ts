@@ -6,7 +6,7 @@ import { useValidations } from "~/composables/domain/validations";
 import { UserSchema } from "~~/server/models/user.schema";
 import { Messages } from "~~/types/enums/Messages";
 import mongoose from "mongoose";
-import {createTransport} from 'nodemailer'
+import { createTransport } from "nodemailer";
 
 export default defineEventHandler(async (event) => {
   const userDTO = (await readBody(event)) as UserDTO;
@@ -71,7 +71,10 @@ export default defineEventHandler(async (event) => {
       });
 
     if (
-      !useValidations().areEqualsTwoStrings(userDTO.password, userDTO.repeatPassword)
+      !useValidations().areEqualsTwoStrings(
+        userDTO.password,
+        userDTO.repeatPassword
+      )
     )
       throw createError({
         statusCode: 400,
@@ -114,15 +117,18 @@ export default defineEventHandler(async (event) => {
     } as User;
 
     const newUser = await UserSchema.create(user);
-    if(!newUser)  throw createError({
+    if (!newUser)
+      throw createError({
         statusCode: 500,
         statusMessage: "Internal Server Error",
         message: Messages.INSERT_DB_ERROR,
       });
 
-    const url = `${useRuntimeConfig().public.baseURL}/confirmar-registro?token=${user.token}`;
+    const url = `${
+      useRuntimeConfig().public.baseURL
+    }/confirmar-registro?token=${user.token}`;
 
-    const {html, text } = useConfirmRegister().generateEmailContent(
+    const { html, text } = useConfirmRegister().generateEmailContent(
       user.name,
       url
     );
@@ -137,27 +143,30 @@ export default defineEventHandler(async (event) => {
       },
     });
 
-    const subject = `${useRuntimeConfig().public.appName} - Confirmação de Registro`;
+    const subject = `${
+      useRuntimeConfig().public.appName
+    } - Confirmação de Registro`;
 
     const info = transporter.sendMail({
-        from: `"${process.env.APP_NAME}" <${process.env.SMTP_USER}>`,
-        to: user.email,
-        subject: subject,
-        text: text,
-        html: html,
-      })
+      from: `"${process.env.APP_NAME}" <${process.env.SMTP_USER}>`,
+      to: user.email,
+      subject: subject,
+      text: text,
+      html: html,
+    });
 
-      if(!info)  throw createError({
+    if (!info)
+      throw createError({
         statusCode: 500,
         statusMessage: "Internal Server Error",
         message: Messages.EMAIL_SERVER_ERROR,
       });
-      
+
     return {
-      message: Messages.SUCCESS_REGISTERED_USER,
+      message: Messages.CONFIRM_REGISTER,
       token: user.token,
     };
   } catch (error) {
-    return error;
+    return { error };
   }
 });

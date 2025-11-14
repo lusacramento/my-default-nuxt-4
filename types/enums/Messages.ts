@@ -22,7 +22,6 @@ export enum Messages {
   ERROR_TOKEN = "Houve um erro no token de validação. Contacte o suporte.",
   TOKEN_NOT_PROVIDER = "Token não informado.",
   NOT_EQUALS_PASSWORDS = "A senha e sua repetição não são iguais.",
-  CONFIRM_REGISTER = "Confirme sua inscrição através do link que enviamos para seu email.",
   EMAIL_ERROR = "Não foi possível enviar o email. Contacte o suporte.",
   LOGOUT = "Sessão encerrada com sucesso! Para acessar novamente, faça o login.",
   VERIFIED_USER = "Usuário verificado com sucesso. Faça o login",
@@ -32,4 +31,5 @@ export enum Messages {
   UPDATED_PASSWORD = "Senha atualizada com sucesso! Faça o login novamente",
   EMAIL_SERVER_ERROR = "Houve um erro ao enviar o email. Contacte o suporte.",
   INSERT_DB_ERROR = "Houve um erro ao inserir no Banco de Dados. Contacte o suporte.",
+  CONFIRM_REGISTER="Confirme seu registro através do link que enviamos para seu email."
 }
