@@ -166,7 +166,7 @@ export default defineEventHandler(async (event) => {
 
     return {
       message: Messages.CONFIRM_REGISTER,
-      token: user.token,
+      url: url,
     };
   } catch (error) {
     return { error };
