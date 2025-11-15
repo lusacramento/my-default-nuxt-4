@@ -14,7 +14,7 @@ export enum Messages {
   NAME_ALREADY_EXISTS = "O nome de usuário já existe. Escolha outro.",
   EMAIL_ALREADY_REGISTER = "Este email já está cadastrado. Caso esqueceu a senha, solicite uma nova.",
   SUCCESS_REGISTERED_USER = "Usuário cadastrado com sucesso! Por favor, faça o login.",
-  INVALID_CREDENTIALS = "Credenciais Inválidas. Verifique se você digitou o email e a senha corretamente.",
+  INVALID_CREDENTIALS = "Credenciais Inválidas. Verifique se você digitou os dados corretamente.",
   INVALID_REPEAT_PASSWORD = "As senhas devem ser iguais.",
   SUCESS_LOGIN = "Login realizado com sucesso!",
   SERVER_ERROR = "Houve um erro no servidor. Contacte o suporte.",
@@ -32,5 +32,8 @@ export enum Messages {
   EMAIL_SERVER_ERROR = "Houve um erro ao enviar o email. Contacte o suporte.",
   INSERT_DB_ERROR = "Houve um erro ao inserir no Banco de Dados. Contacte o suporte.",
   CONFIRM_REGISTER="Confirme seu registro através do link que enviamos para seu email.",
-  NOT_REGISTER_CONFIRM = "O usuário está registrado, mas não confirmado. Por favor, verifique seu email para confirmar o cadastro."
+  NOT_REGISTER_CONFIRM = "O usuário está registrado, mas não confirmado. Por favor, verifique seu email para confirmar o cadastro.",
+  RECOVERY_PASSWORD_EMAIL_SENT = "Verifique a caixa de entrada do seu email para recuperar sua senha. Esta solicitação expira em 10 minutos.",
+  EXPIRED_TOKEN = "O token está espirado. Favor, solicitar novo token.",
+  VALIDATED_TOKEN_RESET_PASSWORD="Token validado. Redefina uma nova senha."
 }

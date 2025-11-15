@@ -1,10 +1,10 @@
 import { useSecurity } from "~/composables/domain/security";
+import { useValidations } from "~/composables/domain/validations";
 import { UserSchema } from "~~/server/models/user.schema";
 import { Messages } from "~~/types/enums/Messages";
 
 export default defineEventHandler(async (event) => {
   const { token } = await getQuery(event);
-
   try {
     if (!token)
       throw createError({
@@ -13,7 +13,6 @@ export default defineEventHandler(async (event) => {
         message: Messages.TOKEN_NOT_PROVIDER,
       });
 
-    // Token verification
     const { error, decoded } = useSecurity().decodeToken(
       token as string,
       useRuntimeConfig().secret
@@ -26,33 +25,38 @@ export default defineEventHandler(async (event) => {
         message: Messages.INVALID_CREDENTIALS,
       });
 
-       if(error?.name === "TokenExpiredError") throw createError({
+    if (error?.name === "TokenExpiredError")
+      throw createError({
         statusCode: 400,
         statusMessage: "Bad credentials",
         message: Messages.EXPIRED_TOKEN,
       });
 
-    const payload = decoded as { id: string };
+    const payload = decoded as { email: string };
 
-    const user = await UserSchema.findById(payload.id);
-
-    if(!user)
+    if (!useValidations().email(payload.email))
       throw createError({
         statusCode: 400,
-        statusMessage: "Bad Request",
-        message: Messages.INVALID_CREDENTIALS,
+        statusMessage: "Bad credentials",
+        message: Messages.INCOMPATIBLE_EMAIL_FORMAT,
       });
 
-    if (user && !user.isVerified) {
-      await UserSchema.findByIdAndUpdate(user._id, {
-        isVerified: true,
+    const user = await UserSchema.findOne({email: payload.email})
+    
+    if(!user) throw createError({
+        statusCode: 400,
+        statusMessage: "Bad credentials",
+        message: Messages.ERROR_TOKEN,
       });
 
+      setResponseStatus(event, 200, 'OK')
+    return {
+      message: Messages.VALIDATED_TOKEN_RESET_PASSWORD
     }
-      sendRedirect(event, `/entrar?email=${user.email}&eVerificado=true`);
-      return;
-      
+
   } catch (error) {
-    return error;
+    return { error };
   }
+
+  return "Hello Nitro";
 });
