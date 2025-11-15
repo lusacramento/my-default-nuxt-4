@@ -26,6 +26,12 @@ export default defineEventHandler(async (event) => {
         message: Messages.INVALID_CREDENTIALS,
       });
 
+       if(error?.name === "TokenExpiredError") throw createError({
+        statusCode: 400,
+        statusMessage: "Bad credentials",
+        message: Messages.EXPIRED_TOKEN,
+      });
+
     const payload = decoded as { id: string };
 
     const user = await UserSchema.findById(payload.id);
