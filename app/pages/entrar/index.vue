@@ -1,6 +1,6 @@
 <template>
   <Container>
-    <h1>Entrar</h1>
+    <LayoutsHeader :page-name="pageName"/>
     <AuthSigninForm @sign-in="signIn" />
     <Row class="text-center mb-1 mt-3">
       <Col>
@@ -22,6 +22,8 @@ import type { AuthResponse } from "~~/types/AuthResponse";
 definePageMeta({
   // middleware: "signin-page",
 });
+
+const pageName = "Página inicial"
 
 
 const { fetch: refreshSession } = useUserSession();

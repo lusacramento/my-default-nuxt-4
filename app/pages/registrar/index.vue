@@ -1,6 +1,6 @@
 <template>
   <Container>
-    <h1>Registrar</h1>
+    <LayoutsHeader :page-name="pageName" />
     <AuthSignupForm @sign-up="register" />
 
   </Container>
@@ -10,6 +10,8 @@
 import { useIAuth } from "~/composables/interfaces/iAuth"
 import type { AuthResponse } from "~~/types/AuthResponse";
 import type { UserDTO } from "~~/types/UserDTO";
+
+const pageName = 'Registrar'
 
 async function register(user: UserDTO) {
   const { message, error } = await useIAuth().signUp(user) as AuthResponse

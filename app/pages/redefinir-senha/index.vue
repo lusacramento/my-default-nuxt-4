@@ -1,6 +1,6 @@
 <template>
   <Container>
-    <h1>Redefinir Senha</h1>
+    <LayoutsHeader :page-name="pageName" />
     <AuthResetPasswordForm @reset-password="resetPassword"/>
   </Container>
 </template>
@@ -8,6 +8,8 @@
 <script lang="ts" setup>
 import { useIAuth } from '~/composables/interfaces/iAuth';
 import type { AuthResponse } from '~~/types/AuthResponse';
+
+const pageName = 'Redefinir Senha'
 
 definePageMeta({
   middleware: 'reset-password'
