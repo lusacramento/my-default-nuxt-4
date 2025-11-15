@@ -1,4 +1,4 @@
-import { useRescuePassword } from './../../../../app/composables/mail/rescuePassword';
+import { useRescuePassword } from '~/composables/mail/rescuePassword';
 import { createTransport } from "nodemailer";
 import { useSecurity } from "~/composables/domain/security";
 import { useValidations } from "~/composables/domain/validations";
@@ -47,7 +47,7 @@ export default defineEventHandler(async (event) => {
 
     const url = `${
       useRuntimeConfig().public.baseURL
-    }/api/auth/redefinir-senha?email=${user.email}&token=${token}`;
+    }/redefinir-senha?token=${token}`;
 
     const { html, text } = useRescuePassword().generateEmailContent(
       user.name,
