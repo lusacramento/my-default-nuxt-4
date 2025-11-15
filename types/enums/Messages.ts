@@ -34,5 +34,6 @@ export enum Messages {
   CONFIRM_REGISTER="Confirme seu registro através do link que enviamos para seu email.",
   NOT_REGISTER_CONFIRM = "O usuário está registrado, mas não confirmado. Por favor, verifique seu email para confirmar o cadastro.",
   RECOVERY_PASSWORD_EMAIL_SENT = "Verifique a caixa de entrada do seu email para recuperar sua senha. Esta solicitação expira em 10 minutos.",
-  EXPIRED_TOKEN = "O token está espirado. Favor, solicitar novo token."
+  EXPIRED_TOKEN = "O token está espirado. Favor, solicitar novo token.",
+  VALIDATED_TOKEN_RESET_PASSWORD="Token validado. Redefina uma nova senha."
 }
