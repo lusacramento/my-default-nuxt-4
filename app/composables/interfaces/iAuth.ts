@@ -23,5 +23,21 @@ export const useIAuth = () => {
     })
   }
 
-  return { signUp, signIn, rescueAccess }
+  async function verifyToken(token: string){
+    return await $fetch('/api/auth/verify-token', {
+      method: 'GET',
+      query: {
+        token
+      }
+    })
+  }
+
+  async function resetPassword(token: string, password: string, repeatPassword: string){
+    return await $fetch(`${baseUrl}/resetPassword`, {
+      method: 'POST',
+      body: {token, password, repeatPassword}
+    })
+  }
+
+  return { signUp, signIn, rescueAccess, verifyToken, resetPassword }
 }
