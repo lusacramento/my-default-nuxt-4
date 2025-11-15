@@ -1,5 +1,5 @@
 <template>
-  <Navbar expand="lg" background-color="body-tertiary" fixed="top">
+  <Navbar expand="lg" background-color="body-tertiary">
     <Container type="fluid">
       <NavbarBrand>{{ useRuntimeConfig().public.appName }}</NavbarBrand>
       <NavbarToggler />

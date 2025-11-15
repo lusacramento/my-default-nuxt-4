@@ -1,5 +1,9 @@
 <template>
     <div>
-        <h1>Welcome to the homepage</h1>
+        <LayoutsHeader :page-name="pageName" />
     </div>
 </template>
+
+<script lang="ts" setup>
+    const pageName = useRuntimeConfig().public.appName
+</script>

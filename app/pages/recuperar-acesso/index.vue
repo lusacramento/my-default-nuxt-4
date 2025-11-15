@@ -1,6 +1,6 @@
 <template>
   <Container>
-    <h1>Recuperar acesso</h1>
+    <LayoutsHeader :page-name="pageName" />
     <AuthRescueAccessForm @rescue="rescueAccess"/>
     <Row class="text-center mb-1 mt-3">
       <Col>
@@ -18,6 +18,8 @@
 <script lang="ts" setup>
 import { useIAuth } from '~/composables/interfaces/iAuth';
 import type { AuthResponse } from '~~/types/AuthResponse';
+
+const pageName = "Recuperar Acesso"
 
 async function rescueAccess(email: string) {
   const { error, message } = await useIAuth().rescueAccess(email) as AuthResponse;
