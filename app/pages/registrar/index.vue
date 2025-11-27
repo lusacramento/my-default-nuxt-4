@@ -2,7 +2,17 @@
   <Container>
     <LayoutsHeader :page-name="pageName" />
     <AuthSignupForm @sign-up="register" />
-
+    <Row class="text-center mb-1 mt-3">
+      <Col>
+        <NuxtLink to="/entrar">Já é cadastrado?</NuxtLink>
+      </Col>
+    </Row>
+    <Row class="text-center">
+      <Col>
+        <NuxtLink to="/recuperar-acesso">Esqueceu a senha?</NuxtLink>
+      </Col>
+    </Row>
+    <TemplatesToast id="registrar-toast"/>
   </Container>
 </template>
 
