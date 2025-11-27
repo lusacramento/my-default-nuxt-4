@@ -9,7 +9,7 @@
     </Row>
     <Row class="text-center">
       <Col>
-        <NuxtLink to="/recuperar-senha">Esqueceu a senha?</NuxtLink>
+        <NuxtLink to="/recuperar-acesso">Esqueceu a senha?</NuxtLink>
       </Col>
     </Row>
   </Container>
