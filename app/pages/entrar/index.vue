@@ -12,19 +12,27 @@
         <NuxtLink to="/recuperar-acesso">Esqueceu a senha?</NuxtLink>
       </Col>
     </Row>
+    <TemplatesToast id="signin-toast" />
   </Container>
 </template>
 
 <script lang="ts" setup>
 import { useIAuth } from "~/composables/interfaces/iAuth";
+import { useMyToastStore } from "~/stores/toast";
 import type { AuthResponse } from "~~/types/AuthResponse";
 
 definePageMeta({
-  // middleware: "signin-page",
+  middleware: "signin-page",
 });
 
 const pageName = "Página inicial"
 
+const toast = useMyToastStore();
+
+
+onMounted(() => {
+  if (toast.isLoaded) toast.show();
+});
 
 const { fetch: refreshSession } = useUserSession();
 
@@ -35,12 +43,13 @@ async function signIn(credentials: { email: string; password: string }) {
   ) as AuthResponse;
 
   if (error) {
-    console.error(error.message)
+    await toast.load(error.message, 'erro')
+    toast.show()
+    return
   } else {
     await refreshSession();
-    console.info(message);
-    // Redirect to projects page after successful sign-in
-    useRouter().push("/");
+    await toast.load(message as string, 'sucesso')
+    useRouter().push("/projetos");
   }
 }
 </script>
