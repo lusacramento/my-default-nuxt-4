@@ -18,16 +18,25 @@
 
 <script lang="ts" setup>
 import { useIAuth } from "~/composables/interfaces/iAuth"
+import { useMyToastStore } from "~/stores/toast";
 import type { AuthResponse } from "~~/types/AuthResponse";
 import type { UserDTO } from "~~/types/UserDTO";
 
 const pageName = 'Registrar'
 
+const toast = useMyToastStore()
+
 async function register(user: UserDTO) {
   const { message, error } = await useIAuth().signUp(user) as AuthResponse
-  if (message)
+  if (message){
+    await toast.load(message, 'sucesso')
     useRouter().push('/')
+    return
+  }
+
   if (error)
-    console.error(error.message)
+    await toast.load(error.message, 'erro')
+    toast.show()
+    
 }
 </script>
