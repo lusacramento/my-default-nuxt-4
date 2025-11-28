@@ -1,7 +1,7 @@
 <template>
   <Container>
     <LayoutsHeader :page-name="pageName" />
-    <AuthRescueAccessForm @rescue="rescueAccess"/>
+    <AuthRescueAccessForm @rescue="rescueAccess" />
     <Row class="text-center mb-1 mt-3">
       <Col>
         <NuxtLink to="/registrar">Não tem conta?</NuxtLink>
