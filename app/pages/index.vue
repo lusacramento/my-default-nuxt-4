@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <Container>
         <LayoutsHeader :page-name="pageName" />
-    </div>
+    </Container>
 </template>
 
 <script lang="ts" setup>
