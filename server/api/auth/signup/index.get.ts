@@ -47,9 +47,8 @@ export default defineEventHandler(async (event) => {
       await UserSchema.findByIdAndUpdate(user._id, {
         isVerified: true,
       });
-
     }
-      sendRedirect(event, `/entrar?email=${user.email}&eVerificado=true`);
+      sendRedirect(event, `/entrar?email=${user.email}&isVerified=true`);
       return;
       
   } catch (error) {
