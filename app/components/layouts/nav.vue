@@ -1,34 +1,18 @@
 <template>
   <Navbar expand="lg" background-color="body-tertiary">
     <Container type="fluid">
-      <NavbarBrand>{{ useRuntimeConfig().public.appName }}</NavbarBrand>
+      <NavbarBrand to="/">{{ useRuntimeConfig().public.appName }}</NavbarBrand>
       <NavbarToggler />
       <NavbarCollapse>
         <NavbarNavList margin="e-auto b-2 b-lg-0">
           <NavItem>
-            <NavLink active>
-              Home
+            <NavLink to="/entrar">
+              Entrar
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink to="/">
-              Link
-            </NavLink>
-          </NavItem>
-          <NavItemDropdown>
-            <NavItemDropdownToggle>Dropdown</NavItemDropdownToggle>
-            <DropdownMenu>
-              <DropdownItem>Action</DropdownItem>
-              <DropdownItem to="/">
-                Another action
-              </DropdownItem>
-              <DropdownItemDivider />
-              <DropdownItem>Something else here</DropdownItem>
-            </DropdownMenu>
-          </NavItemDropdown>
-          <NavItem>
-            <NavLink disabled>
-              Disabled
+            <NavLink to="/registrar">
+              Registrar
             </NavLink>
           </NavItem>
         </NavbarNavList>

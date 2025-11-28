@@ -7,9 +7,12 @@
 
 <script lang="ts" setup>
 import { useIAuth } from '~/composables/interfaces/iAuth';
+import { useMyToastStore } from '~/stores/toast';
 import type { AuthResponse } from '~~/types/AuthResponse';
 
 const pageName = 'Redefinir Senha'
+
+const toast = useMyToastStore()
 
 definePageMeta({
   middleware: 'reset-password'
@@ -20,11 +23,13 @@ const token = useRoute().query.token
 const { message, error} = await useIAuth().resetPassword(token as string, password, repeatPassword) as AuthResponse
 
 if(error){
-  console.error(error.message)
+  await toast.load(error.message, 'erro')
+  toast.show()
 }
 
 if(message){
-  console.info(message)
+  await toast.load(message, 'sucesso')
+  useRouter().push('/entrar')
 }
   
 }

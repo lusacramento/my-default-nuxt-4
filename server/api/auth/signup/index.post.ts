@@ -128,7 +128,7 @@ export default defineEventHandler(async (event) => {
 
     const url = `${
       useRuntimeConfig().public.baseURL
-    }/api/signup?token=${user.token}`;
+    }/api/auth/signup?token=${user.token}`;
 
     const { html, text } = useConfirmRegister().generateEmailContent(
       user.name,
