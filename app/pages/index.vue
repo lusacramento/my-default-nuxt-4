@@ -6,12 +6,10 @@
 </template>
 
 <script lang="ts" setup>
-import { useMyToastStore } from '~/stores/toast';
-
+import { useToast } from '~/composables/domain/toast';
 const pageName = useRuntimeConfig().public.appName
-const toast = useMyToastStore();
 
 onMounted(() => {
-  if (toast.isLoaded) toast.show();
+  useToast().execute();
 });
 </script>

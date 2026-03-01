@@ -6,13 +6,15 @@
 </template>
 
 <script lang="ts" setup>
-import { useMyToastStore } from '~/stores/toast';
+import { useToast } from '~/composables/domain/toast';
+
+definePageMeta({
+  middleware: "authenticated",
+});
 
 const pageName = 'Projetos'
 
-const toast = useMyToastStore();
-
 onMounted(() => {
-  if (toast.isLoaded) toast.show();
+  useToast().execute();
 }); 
 </script>
