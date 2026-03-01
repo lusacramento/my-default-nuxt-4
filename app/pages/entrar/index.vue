@@ -25,7 +25,7 @@ definePageMeta({
   middleware: "signin-page",
 });
 
-const pageName = "Página inicial"
+const pageName = "Entrar"
 
 const toast = useMyToastStore();
 
