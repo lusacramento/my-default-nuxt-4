@@ -12,15 +12,19 @@
 </template>
 
 <script lang="ts" setup>
-import { useMyToastStore } from '~/stores/toast';
+import { useToast } from '~/composables/domain/toast';
 
-const { header, body, color, backgroundColor, isShow } = storeToRefs(useMyToastStore())
-const { reset } = useMyToastStore()
+onMounted(() => {
+  isLoaded.value = true
+})
+
+const { state } = useToast()
+const { header, body, color, backgroundColor, isLoaded } = toRefs(state.value)
 const props = defineProps<{ id: string }>()
 const toast = ref()
 
-watch(isShow, (newValue) => {
-  if (newValue === true) {
+watch(() => [state.value.isShow, state.value.isLoaded], ([newValueIsShow, newValueIsLoaded]) => {
+  if (newValueIsShow === true && newValueIsLoaded === true) {
     show()
   }
 }, { immediate: true })
@@ -34,13 +38,22 @@ function show() {
     counter.value = counter.value - 1
 
     if (counter.value === 0) {
-      await toast.value.hide()
-      setTimeout(() => {
-        counter.value = 5
-        reset()
-      }, 150)
+      close()
       clearInterval(interval)
     }
   }, second)
+}
+
+async function close(){
+  await toast.value.hide()
+  DelayClose()
+  state.value.isShow = false
+}
+
+function DelayClose(){
+  setTimeout(() => {
+        counter.value = 5
+        // reset()
+      }, 150)
 }
 </script>

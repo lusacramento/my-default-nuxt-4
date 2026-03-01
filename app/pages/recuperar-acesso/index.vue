@@ -17,27 +17,25 @@
 
 <script lang="ts" setup>
 import { useIAuth } from '~/composables/interfaces/iAuth';
-import { useMyToastStore } from '~/stores/toast';
+import { useToast } from '~/composables/domain/toast';
 import type { AuthResponse } from '~~/types/AuthResponse';
+import { ToastMessageTypeEnum } from '~~/types/enums/ToastMessageTypeEnum';
 
 const pageName = "Recuperar Acesso"
 
-const toast = useMyToastStore()
-
-onMounted(() => {
-  if (toast.isLoaded) toast.show();
+onMounted(async () => {
+  await useToast().execute()
 });
 
 async function rescueAccess(email: string) {
   const { error, message } = await useIAuth().rescueAccess(email) as AuthResponse;
 
   if (error) {
-    await toast.load(error.message, 'erro')
-    toast.show()
+    await useToast().execute(error.message, ToastMessageTypeEnum.DANGER)
   }
 
   if (message) {
-    await toast.load(message, 'sucesso')
+    await useToast().setToastCookies(message, ToastMessageTypeEnum.SUCCESS)
     useRouter().push('/')
   }
 }

@@ -18,25 +18,22 @@
 
 <script lang="ts" setup>
 import { useIAuth } from "~/composables/interfaces/iAuth"
-import { useMyToastStore } from "~/stores/toast";
+import { useToast } from "~/composables/domain/toast";
 import type { AuthResponse } from "~~/types/AuthResponse";
 import type { UserDTO } from "~~/types/UserDTO";
+import { ToastMessageTypeEnum } from "~~/types/enums/ToastMessageTypeEnum";
 
 const pageName = 'Registrar'
-
-const toast = useMyToastStore()
 
 async function register(user: UserDTO) {
   const { message, error } = await useIAuth().signUp(user) as AuthResponse
   if (message){
-    await toast.load(message, 'sucesso')
+    await useToast().setToastCookies(message, ToastMessageTypeEnum.SUCCESS)
     useRouter().push('/')
     return
   }
 
   if (error)
-    await toast.load(error.message, 'erro')
-    toast.show()
-    
+    await useToast().execute(error.message, ToastMessageTypeEnum.DANGER)   
 }
 </script>

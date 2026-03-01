@@ -18,8 +18,9 @@
 
 <script lang="ts" setup>
 import { useIAuth } from "~/composables/interfaces/iAuth";
-import { useMyToastStore } from "~/stores/toast";
+import { useToast } from "~/composables/domain/toast";
 import type { AuthResponse } from "~~/types/AuthResponse";
+import { ToastMessageTypeEnum } from "~~/types/enums/ToastMessageTypeEnum";
 
 definePageMeta({
   middleware: "signin-page",
@@ -27,11 +28,12 @@ definePageMeta({
 
 const pageName = "Entrar"
 
-const toast = useMyToastStore();
+onMounted(async() => {
+  await useToast().execute()
+});
 
-
-onMounted(() => {
-  if (toast.isLoaded) toast.show();
+onUpdated(async() => {
+  await useToast().execute()
 });
 
 const { fetch: refreshSession } = useUserSession();
@@ -43,12 +45,10 @@ async function signIn(credentials: { email: string; password: string }) {
   ) as AuthResponse;
 
   if (error) {
-    await toast.load(error.message, 'erro')
-    toast.show()
-    return
+    await useToast().execute(error.message, ToastMessageTypeEnum.DANGER)
   } else {
     await refreshSession();
-    await toast.load(message as string, 'sucesso')
+    await useToast().setToastCookies(message as string, ToastMessageTypeEnum.SUCCESS)
     useRouter().push("/projetos");
   }
 }

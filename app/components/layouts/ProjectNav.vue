@@ -22,13 +22,16 @@
 </template>
 
 <script lang="ts" setup>
-  const {clear} = useUserSession();
-  const toast = useMyToastStore();
+import { useToast } from '~/composables/domain/toast';
+import { ToastMessageTypeEnum } from '~~/types/enums/ToastMessageTypeEnum';
 
+  const {clear, } = useUserSession();
 
   async function signout(){
-    clear()
-    await toast.load('Sessão encerrada com sucesso', 'alerta')
+    await clear()
+    await useToast().setToastCookies('Sessão encerrada com sucesso', ToastMessageTypeEnum.INFO)
+    await useRouter().replace('/entrar')
+    
   }
 </script>
 
