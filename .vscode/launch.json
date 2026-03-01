@@ -8,8 +8,25 @@
             "request": "launch",
             "name": "client: chrome",
             "url": "http://localhost:8081",
-            // this should point to your Nuxt `srcDir`, which is `app` by default
             "webRoot": "${workspaceFolder}/app"
+        },
+        {
+            "type": "firefox",
+            "name": "client: firefox",
+            "request": "launch",
+            "reAttach": true,
+            "url": "http://localhost:8081",
+            "webRoot": "${workspaceFolder}",
+            "pathMappings": [
+                {
+                    "url": "http://localhost:8081/_nuxt/pages",
+                    "path": "${workspaceFolder}/app/pages"
+                },
+                {
+                    "url": "http://localhost:8081/_nuxt/pages/index.vue",
+                    "path": "${workspaceFolder}/app/pages/entrar/index.vue"
+                }
+            ]
         },
         {
             "type": "node",
@@ -18,16 +35,24 @@
             "outputCapture": "std",
             "program": "${workspaceFolder}/node_modules/nuxt/bin/nuxt.mjs",
             "args": [
-                "dev", "-- --host --port 8081"
-            ],
+                "dev",
+                "-- --host --port 8081"
+            ]
         }
     ],
     "compounds": [
         {
-            "name": "fullstack: nuxt",
+            "name": "fullstack: nuxt + chrome",
             "configurations": [
                 "server: nuxt",
                 "client: chrome"
+            ]
+        },
+        {
+            "name": "fullstack: nuxt + firefox",
+            "configurations": [
+                "server: nuxt",
+                "client: firefox"
             ]
         }
     ]
