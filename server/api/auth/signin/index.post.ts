@@ -63,21 +63,14 @@ export default defineEventHandler(async (event) => {
       });
 
     // Token verification
-    const { error, decoded } = useSecurity().decodeToken(
+    const { decoded } = useSecurity().decodeToken(
       user.token as string,
       useRuntimeConfig().secret
-    );
-
-    if (error && error?.name !== "TokenExpiredError")
-      throw createError({
-        statusCode: 401,
-        statusMessage: "Bad credentials",
-        message: Messages.INVALID_CREDENTIALS,
-      });
+    );  
 
     // Password verification
     const payload = decoded as { password: string };
-    if(payload.password !== password)
+    if(! payload || payload.password !== password)
       throw createError({
         statusCode: 401,
         statusMessage: "Bad credentials",
