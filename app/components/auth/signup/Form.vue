@@ -193,7 +193,7 @@ const areAllValid = computed(
     components.value.repeatPassword.isValid
 );
 
-const passwordIcon = ref("mdi:eye-off") as Ref<"mdi:eye" | "mdi:eye-off">;
+const passwordIcon = ref("mdi:eye") as Ref<"mdi:eye" | "mdi:eye-off">;
 
 function alterPasswordVisibility() {
   if (passwordIcon.value === "mdi:eye") {

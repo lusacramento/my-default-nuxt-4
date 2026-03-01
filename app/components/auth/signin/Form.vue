@@ -91,7 +91,7 @@ const credentials = ref({
 
 const validations = useValidations();
 
-const passwordIcon = ref("mdi:eye-off") as Ref<"mdi:eye" | "mdi:eye-off">;
+const passwordIcon = ref("mdi:eye") as Ref<"mdi:eye" | "mdi:eye-off">;
 
 const components = ref({
   email: {
